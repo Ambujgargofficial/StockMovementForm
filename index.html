@@ -47,6 +47,43 @@
             cursor: pointer;
         }
         .add-photo-btn:hover { background-color: #e5e7eb; }
+
+        /* Custom Modal Styling */
+        .custom-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .custom-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .custom-modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .custom-modal-close:hover,
+        .custom-modal-close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -128,26 +165,26 @@
                             <label class="block text-sm font-medium text-gray-700 required-asterisk">BILL PHOTO</label>
                             <input type="file" id="billPhotoInput" accept="image/*" capture="environment" multiple class="hidden">
                              <button type="button" class="add-photo-btn mt-2" onclick="document.getElementById('billPhotoInput').click()">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /></svg>
-                                Add Photo(s)
-                            </button>
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /></svg>
+                                 Add Photo(s)
+                             </button>
                             <div class="image-preview-container" id="billPhotoPreview"></div>
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <label for="invoiceNumber" class="block text-sm font-medium text-gray-700">INVOICE NUMBER</label>
-                            <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="Your answer" class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
+                            <label for="invoiceNumber" class="block text-sm font-medium text-gray-700 required-asterisk">INVOICE NUMBER</label>
+                            <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="Your answer" required class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <label for="invoiceAmount" class="block text-sm font-medium text-gray-700">INVOICE AMOUNT</label>
-                            <input type="number" id="invoiceAmount" name="invoiceAmount" step="0.01" placeholder="Your answer" class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
+                            <label for="invoiceAmount" class="block text-sm font-medium text-gray-700 required-asterisk">INVOICE AMOUNT</label>
+                            <input type="number" id="invoiceAmount" name="invoiceAmount" step="0.01" placeholder="Your answer" required class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
                         </div>
-                         <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <label for="consumptionAmount" class="block text-sm font-medium text-gray-700">CONSUMPTION PURCHASE AMOUNT</label>
-                            <input type="number" id="consumptionAmount" name="consumptionAmount" step="0.01" placeholder="Your answer" class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
+                           <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <label for="consumptionAmount" class="block text-sm font-medium text-gray-700 required-asterisk">CONSUMPTION PURCHASE AMOUNT</label>
+                            <input type="number" id="consumptionAmount" name="consumptionAmount" step="0.01" placeholder="Your answer" required class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
                         </div>
                         <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <label for="retailAmount" class="block text-sm font-medium text-gray-700">RETAIL PURCHASE AMOUNT</label>
-                            <input type="number" id="retailAmount" name="retailAmount" step="0.01" placeholder="Your answer" class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
+                            <label for="retailAmount" class="block text-sm font-medium text-gray-700 required-asterisk">RETAIL PURCHASE AMOUNT</label>
+                            <input type="number" id="retailAmount" name="retailAmount" step="0.01" placeholder="Your answer" required class="mt-2 block w-full px-3 py-2 bg-white border-gray-300 rounded-md">
                         </div>
                         <div class="flex items-center justify-between pt-4">
                             <button type="button" class="backBtn text-sm font-medium text-red-600 hover:text-red-500">Back</button>
@@ -160,6 +197,7 @@
         <button id="clearFormBtn" class="block w-full text-center mt-4 text-sm font-medium text-red-600 hover:text-red-500">Clear form</button>
     </div>
 
+    <!-- Success Modal -->
     <div id="successModal" style="display: none;" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-xl p-8 max-w-sm w-full text-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Response submitted</h3>
@@ -169,10 +207,22 @@
         </div>
     </div>
 
+    <!-- Custom Validation Modal -->
+    <div id="validationModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <span class="custom-modal-close">&times;</span>
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="validationModalTitle">Validation Error</h3>
+            <p class="mt-2 text-sm text-gray-500" id="validationModalMessage"></p>
+            <div class="mt-4">
+                <button type="button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700" id="validationModalCloseBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const { jsPDF } = window.jspdf;
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxFb2rZEBSnkyVzuxMRBPeB6JtxBTwZ4pTclOEDBzIl1tV8hJhy-qWwgvN-HV0MHskCjA/exec'; 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxFb2rZEBSnkyVzuxMRBPeB6JtxBTwZ4pTclOEDBzIl1tV8hJhy-qWwgvN-HV0MHskCjA/exec';
             const form = document.getElementById('multiStepForm');
             const headerTitle = document.getElementById('header-title');
             const steps = {
@@ -188,20 +238,49 @@
 
             let fileStores = { productPhoto: [], voucherPhoto: [], billPhoto: [] };
 
+            // Get modal elements
+            const validationModal = document.getElementById('validationModal');
+            const validationModalTitle = document.getElementById('validationModalTitle');
+            const validationModalMessage = document.getElementById('validationModalMessage');
+            const validationModalCloseBtn = document.getElementById('validationModalCloseBtn');
+            const validationModalCloseSpan = validationModal.querySelector('.custom-modal-close');
+
+            // Function to show custom validation modal
+            function showValidationModal(title, message) {
+                validationModalTitle.textContent = title;
+                validationModalMessage.textContent = message;
+                validationModal.style.display = 'flex';
+            }
+
+            // Close validation modal listeners
+            validationModalCloseBtn.addEventListener('click', () => {
+                validationModal.style.display = 'none';
+            });
+            validationModalCloseSpan.addEventListener('click', () => {
+                validationModal.style.display = 'none';
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target == validationModal) {
+                    validationModal.style.display = 'none';
+                }
+            });
+
+            // Function to setup image handling for file inputs
             function setupImageHandling(inputId, previewId, storeKey) {
                 const input = document.getElementById(inputId);
                 input.addEventListener('change', () => {
                     const files = Array.from(input.files);
                     fileStores[storeKey].push(...files);
                     renderPreviews(storeKey);
-                    input.value = '';
+                    input.value = ''; // Clear input to allow re-selection of the same file
                 });
             }
 
+            // Function to render image previews
             function renderPreviews(storeKey) {
                 const previewContainerId = `${storeKey}Preview`;
                 const previewContainer = document.getElementById(previewContainerId);
-                previewContainer.innerHTML = '';
+                previewContainer.innerHTML = ''; // Clear existing previews
                 fileStores[storeKey].forEach((file, index) => {
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'preview-item';
@@ -212,6 +291,7 @@
                     deleteBtn.className = 'delete-btn';
                     deleteBtn.innerHTML = '&times;';
                     deleteBtn.onclick = () => {
+                        // Remove file from store and re-render
                         fileStores[storeKey].splice(index, 1);
                         renderPreviews(storeKey);
                     };
@@ -221,87 +301,114 @@
                 });
             }
 
+            // Initialize image handling for all photo inputs
             setupImageHandling('productPhotoInput', 'productPhotoPreview', 'productPhoto');
             setupImageHandling('voucherPhotoInput', 'voucherPhotoPreview', 'voucherPhoto');
             setupImageHandling('billPhotoInput', 'billPhotoPreview', 'billPhoto');
 
+            // Function to fetch vendors from the Google Apps Script
             async function fetchVendors() {
                 try {
                     const response = await fetch(scriptURL);
                     const result = await response.json();
-                    if (result.result === 'success') {
-                        vendorNameSelect.innerHTML = '<option value="">Choose</option>';
+                    if (result.result === 'success' && Array.isArray(result.data)) {
+                        vendorNameSelect.innerHTML = '<option value="">Choose</option>'; // Add default 'Choose' option
                         result.data.forEach(vendor => {
                             const option = document.createElement('option');
                             option.value = vendor;
                             option.textContent = vendor;
                             vendorNameSelect.appendChild(option);
                         });
-                    } else { throw new Error(result.error); }
+                    } else {
+                        throw new Error(result.error || 'Invalid response format from server.');
+                    }
                 } catch (error) {
                     console.error('Error fetching vendors:', error);
                     vendorNameSelect.innerHTML = '<option value="">Could not load vendors</option>';
+                    showValidationModal('Error', `Failed to load vendors: ${error.message}. Please try again later.`);
                 }
             }
 
+            // Function to display the specified step and update header
             function showStep(stepName) {
-                for (const name in steps) { steps[name].style.display = 'none'; }
+                for (const name in steps) {
+                    steps[name].style.display = 'none';
+                }
                 steps[stepName].style.display = 'block';
+                if (stepName === 'step1') {
+                    headerTitle.textContent = 'Salon & Category Selection';
+                } else if (stepName === 'stockTransfer') {
+                    headerTitle.textContent = 'Stock Transfer / Checkout';
+                } else if (stepName === 'purchase') {
+                    headerTitle.textContent = 'Purchase Details';
+                }
             }
 
+            // Function to dynamically update 'To Salon' radio options based on selected 'Salon Location'
             function updateToSalonOptions() {
                 const selectedLocation = salonLocationSelect.value;
-                toSalonContainer.innerHTML = '';
+                toSalonContainer.innerHTML = ''; // Clear previous options
+                let hasValidOptions = false;
                 for (const option of salonLocationSelect.options) {
                     if (option.value && option.value !== selectedLocation) {
                         const label = document.createElement('label');
                         label.className = 'flex items-center';
+                        // Add required attribute to the radio buttons for 'TO SALON'
                         label.innerHTML = `<input type="radio" name="toSalon" value="${option.value}" required class="h-4 w-4 text-red-600 border-gray-300 focus:ring-red-500"><span class="ml-3 text-sm text-gray-700">${option.text}</span>`;
                         toSalonContainer.appendChild(label);
+                        hasValidOptions = true;
                     }
+                }
+                // If no other salons are available, provide a message or handle accordingly
+                if (!hasValidOptions && selectedLocation) {
+                    toSalonContainer.innerHTML = '<p class="text-sm text-gray-500">No other salons available for transfer.</p>';
                 }
             }
 
+            // Event listener for Salon Location change to update 'To Salon' options
             salonLocationSelect.addEventListener('change', updateToSalonOptions);
 
+            // Event listener for "Next" button click (Step 1 to Step 2/3 transition)
             nextBtn.addEventListener('click', function () {
                 const salonInput = document.getElementById('salonLocation');
                 if (!salonInput.checkValidity()) {
-                    alert('Please select a Salon Location.');
+                    showValidationModal('Required Field', 'Please select a Salon Location.');
                     salonInput.focus();
                     return;
                 }
                 const categoryInput = form.querySelector('input[name="category"]:checked');
                 if (!categoryInput) {
-                    alert('Please select a Category.');
+                    showValidationModal('Required Field', 'Please select a Category.');
                     return;
                 }
 
                 const selectedCategory = categoryInput.value;
                 if (selectedCategory === 'STOCK TRANSFER' || selectedCategory === 'CHECKOUT') {
-                    updateToSalonOptions();
+                    updateToSalonOptions(); // Ensure 'To Salon' options are updated
                     showStep('stockTransfer');
-                    headerTitle.textContent = 'Stock Transfer / Checkout';
                 } else if (selectedCategory === 'PURCHASE') {
                     showStep('purchase');
-                    headerTitle.textContent = 'Purchase Details';
                 }
             });
 
+            // Event listeners for "Back" buttons (Step 2/3 to Step 1 transition)
             backBtns.forEach(btn => btn.addEventListener('click', () => {
                 showStep('step1');
-                headerTitle.textContent = 'Salon & Category Selection';
             }));
 
+            // Function to reset the entire form
             function resetForm() {
                 form.reset();
+                // Clear all file stores and their previews
                 fileStores = { productPhoto: [], voucherPhoto: [], billPhoto: [] };
                 renderPreviews('productPhoto');
                 renderPreviews('voucherPhoto');
                 renderPreviews('billPhoto');
-                showStep('step1');
-                document.getElementById('successModal').style.display = 'none';
+                showStep('step1'); // Go back to the first step
+                document.getElementById('successModal').style.display = 'none'; // Hide success modal
+                // Reset header title
                 headerTitle.textContent = 'Salon & Category Selection';
+                // Enable and reset submit buttons
                 document.querySelectorAll('.submitBtn').forEach(b => {
                     b.classList.remove('loading');
                     b.disabled = false;
@@ -309,96 +416,138 @@
                 });
             }
 
+            // Function to convert image files to a single PDF
             async function createPdfFromFiles(files, docName) {
                 if (!files || files.length === 0) return null;
                 const pdf = new jsPDF();
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
-                    const image = await new Promise((resolve) => {
+                    // Ensure only image files are processed
+                    if (!file.type.startsWith('image/')) {
+                        console.warn(`Skipping non-image file: ${file.name}`);
+                        continue;
+                    }
+                    const image = await new Promise((resolve, reject) => {
                         const reader = new FileReader();
                         reader.onload = e => resolve(e.target.result);
+                        reader.onerror = error => reject(error);
                         reader.readAsDataURL(file);
                     });
-                    if (i > 0) pdf.addPage();
+                    if (i > 0) pdf.addPage(); // Add a new page for each subsequent image
                     const imgProps = pdf.getImageProperties(image);
                     const pdfWidth = pdf.internal.pageSize.getWidth();
+                    // Calculate height to maintain aspect ratio
                     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                    pdf.addImage(image, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    pdf.addImage(image, imgProps.fileType, 0, 0, pdfWidth, pdfHeight);
                 }
                 const base64 = pdf.output('datauristring');
                 return { name: `${docName}.pdf`, type: 'application/pdf', base64: base64 };
             }
 
+            // Event listener for form submission
             form.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                
+                e.preventDefault(); // Prevent default form submission
+
+                // Determine the current active step (either 'stepPurchase' or 'stepStockTransfer')
                 const currentStepDiv = form.querySelector('#stepPurchase[style*="block"]') || form.querySelector('#stepStockTransfer[style*="block"]');
-                if (!currentStepDiv) return;
+                if (!currentStepDiv) {
+                    showValidationModal('Form Error', 'Could not determine current form step.');
+                    return;
+                }
 
                 let isStepValid = true;
-                const requiredElements = currentStepDiv.querySelectorAll('[required], input[type="radio"][name="toSalon"]:required');
-                
+                // Select all required inputs within the current active step, including radio buttons for 'toSalon'
+                const requiredElements = currentStepDiv.querySelectorAll('[required]:not([type="radio"][name="category"]), input[type="radio"][name="toSalon"]:required');
+
+                // Validate each required element
                 for (const element of requiredElements) {
                     if (!element.checkValidity()) {
                         isStepValid = false;
-                        const label = element.closest('.bg-white').querySelector('label');
+                        const label = element.closest('.bg-white')?.querySelector('label') || element.closest('.space-y-2')?.previousElementSibling; // Find associated label
                         const labelText = label ? label.textContent.replace('*','').trim() : 'a required field';
-                        alert(`Please fill out: ${labelText}`);
+                        showValidationModal('Required Field', `Please fill out: ${labelText}`);
                         element.focus();
-                        return;
+                        return; // Stop on first invalid field
                     }
                 }
-                
+
+                // Specific validation for photo uploads based on category
                 if (currentStepDiv.id === 'stepPurchase' && fileStores.billPhoto.length === 0) {
-                    alert('Please upload at least one Bill Photo.');
+                    showValidationModal('Required Field', 'Please upload at least one Bill Photo for Purchase.');
                     return;
                 }
                 if (currentStepDiv.id === 'stepStockTransfer' && fileStores.productPhoto.length === 0) {
-                    alert('Please upload at least one Product Photo.');
+                    showValidationModal('Required Field', 'Please upload at least one Product Photo for Stock Transfer/Checkout.');
                     return;
                 }
 
+                // Disable submit buttons and show loading state
                 document.querySelectorAll('.submitBtn').forEach(btn => {
                     btn.classList.add('loading');
                     btn.disabled = true;
                     btn.textContent = 'Submitting...';
                 });
 
+                // Prepare form data for submission
                 const formData = new FormData(form);
                 const data = {};
                 for (let [key, value] of formData.entries()) {
-                    if (!(value instanceof File)) { data[key] = value; }
+                    if (!(value instanceof File)) { // Exclude file objects from direct formData entry, will handle PDFs separately
+                        data[key] = value;
+                    }
                 }
-                
+                // Add selected category and salon location from step1
+                data.salonLocation = salonLocationSelect.value;
+                data.category = form.querySelector('input[name="category"]:checked')?.value;
+                if (data.category === 'STOCK TRANSFER' || data.category === 'CHECKOUT') {
+                    data.toSalon = form.querySelector('input[name="toSalon"]:checked')?.value || '';
+                }
+
                 try {
+                    // Convert image files to Base64 PDFs and add to data object
                     data.productPhoto = await createPdfFromFiles(fileStores.productPhoto, 'Product_Photos');
                     data.voucherPhoto = await createPdfFromFiles(fileStores.voucherPhoto, 'Voucher_Photos');
                     data.billPhoto = await createPdfFromFiles(fileStores.billPhoto, 'Bill_Photos');
 
+                    // Send data to Google Apps Script
                     const response = await fetch(scriptURL, {
                         method: 'POST',
-                        mode: 'cors',
-                        cache: 'no-cache',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(data)
+                        mode: 'cors', // Enable CORS
+                        cache: 'no-cache', // Prevent caching of the response
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8' // Content-Type for Apps Script
+                        },
+                        body: JSON.stringify(data) // Send data as JSON string
                     });
-                    
-                    const result = await response.json();
+
+                    const result = await response.json(); // Parse JSON response
                     if (result.result === 'success') {
-                        document.getElementById('successModal').style.display = 'flex';
-                    } else { throw new Error(result.error || 'Unknown error occurred.'); }
+                        document.getElementById('successModal').style.display = 'flex'; // Show success modal
+                    } else {
+                        throw new Error(result.error || 'Unknown error occurred during submission.');
+                    }
                 } catch (error) {
-                    console.error('Error!', error.message);
-                    alert(`An error occurred: ${error.message}`);
-                    resetForm();
+                    console.error('Submission Error:', error.message);
+                    showValidationModal('Submission Error', `An error occurred: ${error.message}`);
+                    resetForm(); // Reset form on error
+                } finally {
+                    // Re-enable submit buttons regardless of success or failure (if not reset by error handler)
+                    document.querySelectorAll('.submitBtn').forEach(btn => {
+                        btn.classList.remove('loading');
+                        btn.disabled = false;
+                        btn.textContent = 'Submit';
+                    });
                 }
             });
 
+            // Event listener for "Submit another response" button in success modal
             document.getElementById('closeModal').addEventListener('click', resetForm);
+            // Event listener for "Clear form" button
             document.getElementById('clearFormBtn').addEventListener('click', resetForm);
-            
-            showStep('step1');
-            fetchVendors();
+
+            // Initial setup on page load
+            showStep('step1'); // Display the first step
+            fetchVendors(); // Load vendors for the 'Purchase' step
         });
     </script>
 </body>
