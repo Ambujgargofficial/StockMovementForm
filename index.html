@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .required-asterisk::after { content: ' *'; color: #ef4444; }
@@ -309,8 +310,28 @@
             // Function to fetch vendors from the Google Apps Script
             async function fetchVendors() {
                 try {
-                    const response = await fetch(scriptURL);
-                    const result = await response.json();
+                    // Fix: Add a timestamp parameter to prevent aggressive mobile caching 
+                    // causing old/corrupt JSON parses or returning HTML error pages.
+                    const fetchUrl = scriptURL + (scriptURL.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
+                    
+                    const response = await fetch(fetchUrl, {
+                        method: 'GET',
+                        redirect: 'follow', // Fix: Ensure redirects from GAS are followed on all browsers
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    // Fix: Read as text first to handle cases where Google returns an HTML error gracefully
+                    const responseText = await response.text();
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('Non-JSON format returned from server:', responseText.substring(0, 150));
+                        throw new Error('Server returned invalid data format. Please check the network or server script.');
+                    }
+
                     if (result.result === 'success' && Array.isArray(result.data)) {
                         vendorNameSelect.innerHTML = '<option value="">Choose</option>'; // Add default 'Choose' option
                         result.data.forEach(vendor => {
@@ -552,4 +573,3 @@
     </script>
 </body>
 </html>
-
